@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Sparkles, Bot, User, ArrowRight } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
+import { getApiUrl } from '../utils/api';
 
 export default function AiAssistantModal({ isOpen, onClose, initialQuery }) {
   const { sampleAiQuestions } = portfolioData;
@@ -39,7 +40,7 @@ export default function AiAssistantModal({ isOpen, onClose, initialQuery }) {
     setIsTyping(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(getApiUrl('/api/chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

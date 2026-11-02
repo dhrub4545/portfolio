@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Copy, Check, Headphones, MessageSquare, AlertCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
+import { getApiUrl } from '../utils/api';
 
 export default function Contact() {
   const { personal } = portfolioData;
@@ -32,7 +33,7 @@ export default function Contact() {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(getApiUrl('/api/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

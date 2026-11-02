@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Eye, Github, Linkedin, Code2, Heart, CheckCircle2 } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
+import { getApiUrl } from '../utils/api';
 
 export default function Footer() {
   const { personal } = portfolioData;
@@ -8,10 +9,10 @@ export default function Footer() {
 
   useEffect(() => {
     // Record page view
-    fetch('/api/stats/view', { method: 'POST' }).catch(() => {});
+    fetch(getApiUrl('/api/stats/view'), { method: 'POST' }).catch(() => {});
 
     // Fetch latest stats
-    fetch('/api/stats')
+    fetch(getApiUrl('/api/stats'))
       .then((res) => res.json())
       .then((data) => {
         if (data && data.views) {

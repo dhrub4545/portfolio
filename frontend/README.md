@@ -100,6 +100,19 @@ The frontend automatically proxies API calls (`/api/*`) to the backend server ru
 
 ---
 
+## 🚀 Vercel Deployment
+
+This frontend is pre-configured with `vercel.json` for single-page application (SPA) client-side rewrites and asset caching.
+
+### Deploying via Vercel Dashboard
+1. Go to [vercel.com/new](https://vercel.com/new) and import the **`portfolio_frontend`** repository.
+2. Framework Preset will be automatically detected as **Vite**.
+3. In **Environment Variables**, add:
+   * `VITE_API_URL`: `https://your-backend-project.vercel.app` *(Replace with your deployed backend URL from `portfolio_backend`)*
+4. Click **Deploy**.
+
+---
+
 ## 👨‍💻 Author
 **Dhrub Pandit**
 * Full Stack & AI Engineer
