@@ -615,20 +615,27 @@ body {
   border-color: var(--accent-primary);
 }
 
-/* Hero Right 3D Visual */
+/* Hero Right 3D Visual with Dynamic Cycling Floating Badges */
 .hero-right {
   flex: 0.9;
   display: flex;
   justify-content: center;
+  align-items: center;
   position: relative;
+}
+
+.hero-avatar-wrap {
+  position: relative;
+  display: inline-block;
+  padding: 20px 35px;
 }
 
 .hero-avatar-card {
   position: relative;
-  width: 360px;
+  width: 350px;
   height: 440px;
   border-radius: 28px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 24, 34, 0.8) 100%);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 24, 34, 0.85) 100%);
   border: 1px solid var(--glass-border);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
               0 0 40px var(--accent-glow);
@@ -637,11 +644,35 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hero-avatar-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 50px var(--accent-glow);
+}
+
+.hero-card-sheen {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  animation: sheenSlide 7s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes sheenSlide {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(50%); }
 }
 
 .hero-avatar-img {
@@ -651,47 +682,166 @@ body {
   border-radius: 20px;
   border: 2px solid var(--accent-primary);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 2;
 }
 
 .hero-card-meta {
   margin-top: 18px;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-card-name {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .hero-card-role {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--accent-primary);
-  font-weight: 600;
-}
-
-/* Floating tech chips */
-.floating-chip {
-  position: absolute;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  padding: 6px 14px;
-  border-radius: 9999px;
-  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--text-primary);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  animation: floatBounce 4s infinite ease-in-out;
 }
 
-.chip-1 { top: 20px; left: -25px; animation-delay: 0s; }
-.chip-2 { bottom: 60px; right: -30px; animation-delay: 1.5s; }
-.chip-3 { top: 50%; left: -35px; animation-delay: 2.2s; }
+/* ================= Dynamic Floating Skill Badges ================= */
+.dynamic-floating-chip {
+  position: absolute;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: rgba(18, 22, 34, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--chip-border, rgba(255, 255, 255, 0.18));
+  box-shadow: 0 10px 28px var(--chip-glow, rgba(0, 0, 0, 0.45)),
+              0 0 16px var(--chip-glow, transparent),
+              inset 0 1px 2px rgba(255, 255, 255, 0.25);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.28s ease,
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
+  user-select: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
 
-@keyframes floatBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+[data-theme='light'] .dynamic-floating-chip {
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 10px 28px var(--chip-glow, rgba(0, 0, 0, 0.12)),
+              0 0 14px var(--chip-glow, transparent),
+              inset 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+.dynamic-floating-chip:hover {
+  transform: scale(1.08) translateY(-4px) !important;
+}
+
+/* Specific Slot Positioning & Gentle Floating Keyframes */
+.chip-slot-1 {
+  top: 15px;
+  left: -20px;
+  animation: floatSlot1 4s ease-in-out infinite;
+}
+
+.chip-slot-2 {
+  top: 48%;
+  right: -25px;
+  animation: floatSlot2 4.4s ease-in-out infinite;
+}
+
+.chip-slot-3 {
+  bottom: 45px;
+  left: -22px;
+  animation: floatSlot3 4.2s ease-in-out infinite;
+}
+
+@keyframes floatSlot1 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-9px) rotate(-1.5deg); }
+}
+
+@keyframes floatSlot2 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-11px) rotate(1.5deg); }
+}
+
+@keyframes floatSlot3 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(-1deg); }
+}
+
+/* Exit & Enter Transition States */
+.dynamic-floating-chip.is-exiting {
+  transform: scale(0.65) translateY(-14px) !important;
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.dynamic-floating-chip.is-entering {
+  animation: chipPopIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes chipPopIn {
+  0% {
+    transform: scale(0.6) translateY(16px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Chip Internal Content */
+.chip-icon-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.chip-text-content {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.chip-title {
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.chip-category {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chip-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-left: 2px;
+  flex-shrink: 0;
+  animation: chipPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes chipPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.4); opacity: 0.5; }
 }
 
 /* ================= About Section ================= */
@@ -1540,4 +1690,12 @@ body {
   .contact-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
   .hero-avatar-card { width: 300px; height: 380px; }
+  .hero-avatar-wrap { padding: 15px 15px; }
+  .dynamic-floating-chip { padding: 6px 12px; }
+  .chip-slot-1 { top: 5px; left: -10px; }
+  .chip-slot-2 { top: 50%; right: -10px; }
+  .chip-slot-3 { bottom: 25px; left: -10px; }
+  .chip-icon-circle { width: 26px; height: 26px; font-size: 0.85rem; }
+  .chip-title { font-size: 0.78rem; }
+  .chip-category { font-size: 0.62rem; }
 }
