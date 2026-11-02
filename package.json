@@ -1,0 +1,23 @@
+{
+  "name": "dhrub-pandit-portfolio",
+  "version": "1.0.0",
+  "description": "Full-Stack Portfolio Website for Dhrub Pandit (React 19 + Node.js/Express)",
+  "scripts": {
+    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev": "node -e \"const { spawn } = require('child_process'); spawn('npm', ['--prefix', 'backend', 'start'], { stdio: 'inherit', shell: true }); spawn('npm', ['--prefix', 'frontend', 'run', 'dev'], { stdio: 'inherit', shell: true });\"",
+    "build:frontend": "npm --prefix frontend run build",
+    "start": "npm --prefix backend start"
+  },
+  "keywords": [
+    "portfolio",
+    "react",
+    "nodejs",
+    "express",
+    "ai-engineer",
+    "full-stack"
+  ],
+  "author": "Dhrub Pandit <panditdhrub0@gmail.com>",
+  "license": "MIT"
+}
