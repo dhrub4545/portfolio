@@ -17,7 +17,7 @@ export const portfolioData = {
     location: "Bengaluru, India / Nepal",
     github: "https://github.com/dhrub4545",
     linkedin: "https://www.linkedin.com",
-    leetcode: "https://leetcode.com/u/panditdhrub0/",
+    leetcode: "https://leetcode.com/u/Dhrub417183/",
     avatar: "/assets/dhrub-profile.png",
     signature: "/assets/dhrub-signature.jpg",
     resumePdf: "/assets/Dhrub_ResumeNP.pdf",
