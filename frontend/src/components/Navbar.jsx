@@ -11,6 +11,7 @@ export default function Navbar({ onOpenResume, theme, toggleTheme }) {
     { id: 'about', label: 'About' },
     { id: 'experience', label: 'Experience' },
     { id: 'projects', label: 'Projects' },
+    { id: 'certifications', label: 'Certifications' },
     { id: 'skills', label: 'Skills & Edu' },
     { id: 'contact', label: 'Contact' }
   ];
