@@ -14,7 +14,7 @@ export const portfolioData = {
     status: "Available for Full-Time Roles & AI Projects",
     email: "panditdhrub0@gmail.com",
     phone: "+9779803862836",
-    location: "Bengaluru, India / Nepal",
+    location: "Nepal / Bengaluru, India",
     github: "https://github.com/dhrub4545",
     linkedin: "https://www.linkedin.com",
     leetcode: "https://leetcode.com/u/Dhrub417183/",
