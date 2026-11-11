@@ -18,6 +18,14 @@ const dynamicSkillsList = [
   { name: '200+ LeetCode DSA', icon: '💡', color: '#f59e0b', category: 'Algorithms' }
 ];
 
+// Curated concise quick prompts with icons for hero bar
+const quickAiPrompts = [
+  { label: 'AUDEX AI', query: 'Tell me about AUDEX AI and how it works', icon: '⚡' },
+  { label: 'Core Stack', query: "What are Dhrub's top technical skills?", icon: '🛠️' },
+  { label: '8.94 CGPA / VTU', query: 'Where did Dhrub study and what is his CGPA?', icon: '🎓' },
+  { label: 'NEC Licensure', query: "Tell me about Dhrub's engineering license and certifications", icon: '📜' }
+];
+
 export default function Hero({ onOpenResume, onOpenAiChat }) {
   const { personal, sampleAiQuestions } = portfolioData;
   const [promptText, setPromptText] = useState('');
@@ -148,32 +156,39 @@ export default function Hero({ onOpenResume, onOpenAiChat }) {
         {/* AI Prompt Search Bar */}
         <div className="ai-prompt-bar">
           <form onSubmit={handlePromptSubmit} className="ai-prompt-input-row">
-            <Sparkles size={20} className="ai-sparkle-icon" />
+            <div className="ai-sparkle-wrap">
+              <Sparkles size={18} className="ai-sparkle-icon" />
+            </div>
             <input
               type="text"
               value={promptText}
               onChange={(e) => setPromptText(e.target.value)}
-              placeholder="Ask AI anything about Dhrub (skills, AUDEX AI, CGPA, etc.)..."
+              placeholder="Ask AI anything about Dhrub (skills, AUDEX AI, CGPA, certs)..."
               className="ai-prompt-input"
             />
-            <button type="submit" className="ai-prompt-btn">
+            <button type="submit" className="ai-prompt-btn" aria-label="Ask AI">
               <span>Ask AI</span>
               <ArrowRight size={14} />
             </button>
           </form>
 
           {/* Sample prompt chips */}
-          <div className="ai-prompt-chips">
-            {sampleAiQuestions.slice(0, 3).map((q, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => handleChipClick(q)}
-                className="ai-prompt-chip"
-              >
-                {q}
-              </button>
-            ))}
+          <div className="ai-prompt-chips-wrapper">
+            <span className="ai-prompt-chips-label">Quick:</span>
+            <div className="ai-prompt-chips">
+              {quickAiPrompts.map((item, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleChipClick(item.query)}
+                  className="ai-prompt-chip"
+                  title={item.query}
+                >
+                  <span className="ai-chip-icon">{item.icon}</span>
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

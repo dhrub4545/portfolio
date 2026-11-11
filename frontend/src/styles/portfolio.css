@@ -533,17 +533,34 @@ body {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
-  padding: 16px 20px;
+  padding: 14px 18px;
   max-width: 620px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(14px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ai-prompt-bar:focus-within {
+  border-color: rgba(234, 179, 8, 0.45);
+  box-shadow: 0 10px 35px rgba(234, 179, 8, 0.12), 0 0 0 1px rgba(234, 179, 8, 0.25);
 }
 
 .ai-prompt-input-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+}
+
+.ai-sparkle-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(234, 179, 8, 0.12);
+  flex-shrink: 0;
 }
 
 .ai-sparkle-icon {
@@ -562,8 +579,14 @@ body {
   border: none;
   outline: none;
   color: var(--text-primary);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-family: inherit;
+  min-width: 0;
+}
+
+.ai-prompt-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.75;
 }
 
 .ai-prompt-btn {
@@ -571,14 +594,15 @@ body {
   color: #0d0d12;
   border: none;
   border-radius: 12px;
-  padding: 8px 14px;
+  padding: 8px 16px;
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
 }
 
 [data-theme='light'] .ai-prompt-btn {
@@ -586,7 +610,25 @@ body {
 }
 
 .ai-prompt-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.04);
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.35);
+}
+
+.ai-prompt-chips-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.ai-prompt-chips-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  opacity: 0.8;
 }
 
 .ai-prompt-chips {
@@ -594,25 +636,73 @@ body {
   align-items: center;
   gap: 8px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  overflow-y: hidden;
+  padding: 2px 2px 2px 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+  -webkit-overflow-scrolling: touch;
+}
+
+.ai-prompt-chips::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .ai-prompt-chip {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--glass-border);
   color: var(--text-muted);
-  font-size: 0.78rem;
-  padding: 4px 12px;
+  font-size: 0.76rem;
+  padding: 4px 11px;
   border-radius: 9999px;
   white-space: nowrap;
   cursor: pointer;
-  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.ai-chip-icon {
+  font-size: 0.82rem;
+  line-height: 1;
 }
 
 .ai-prompt-chip:hover {
-  background: color-mix(in srgb, var(--accent-primary) 18%, transparent);
+  background: rgba(234, 179, 8, 0.12);
   color: var(--accent-primary);
-  border-color: var(--accent-primary);
+  border-color: rgba(234, 179, 8, 0.4);
+  transform: translateY(-1px);
+}
+
+.ai-prompt-chip:active {
+  transform: translateY(0);
+}
+
+/* Light Theme Overrides for Hero AI Bar */
+[data-theme='light'] .ai-prompt-bar {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+[data-theme='light'] .ai-sparkle-wrap {
+  background: rgba(234, 179, 8, 0.15);
+}
+
+[data-theme='light'] .ai-prompt-chip {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #475569;
+}
+
+[data-theme='light'] .ai-prompt-chip:hover {
+  background: rgba(234, 179, 8, 0.12);
+  color: #b45309;
+  border-color: #f59e0b;
 }
 
 /* Hero Right 3D Visual with Dynamic Cycling Floating Badges */
