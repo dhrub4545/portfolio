@@ -55,6 +55,25 @@ export default function Contact() {
     setTimeout(() => setCopied(false), 2200);
   };
 
+  const handleSendViaWhatsApp = () => {
+    const name = formData.name.trim() || 'Visitor';
+    const email = formData.email.trim() || 'Not specified';
+    const subject = formData.subject.trim() || 'Portfolio Opportunity';
+    const message = formData.message.trim() || 'Hi Dhrub, I came across your portfolio and wanted to discuss a project!';
+
+    const text = `Hi Dhrub!
+👤 *From:* ${name}
+📧 *Email:* ${email}
+📌 *Subject:* ${subject}
+
+💬 *Message:*
+${message}`;
+
+    const cleanPhone = '9779803862836';
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -118,21 +137,22 @@ export default function Contact() {
 
           {submitStatus && (
             <div
-              style={{
-                padding: '16px',
-                borderRadius: '12px',
-                marginBottom: '20px',
-                background: submitStatus.success ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
-                border: `1px solid ${submitStatus.success ? '#10b981' : '#ef4444'}`,
-                color: submitStatus.success ? '#10b981' : '#ef4444',
-                fontSize: '0.92rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}
+              className={`contact-submit-alert ${submitStatus.success ? 'is-success' : 'is-error'}`}
             >
-              {submitStatus.success ? <Check size={18} /> : <AlertCircle size={18} />}
-              <span>{submitStatus.message}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                {submitStatus.success ? <Check size={18} /> : <AlertCircle size={18} />}
+                <span>{submitStatus.message}</span>
+              </div>
+              {submitStatus.success && (
+                <button
+                  type="button"
+                  onClick={handleSendViaWhatsApp}
+                  className="btn-whatsapp-followup"
+                >
+                  <MessageSquare size={14} />
+                  <span>Also ping Dhrub on WhatsApp for instant reply ↗</span>
+                </button>
+              )}
             </div>
           )}
 
@@ -187,15 +207,27 @@ export default function Contact() {
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="btn-primary"
-              style={{ width: '100%', justifyContent: 'center' }}
-            >
-              <Send size={16} />
-              <span>{isSubmitting ? 'Transmitting Message...' : 'Send Message'}</span>
-            </button>
+            <div className="contact-form-actions">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-primary"
+                style={{ flex: 1, justifyContent: 'center' }}
+              >
+                <Send size={16} />
+                <span>{isSubmitting ? 'Transmitting...' : 'Send Message'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleSendViaWhatsApp}
+                className="btn-whatsapp-action"
+                title="Send your message directly to Dhrub on WhatsApp"
+              >
+                <MessageSquare size={16} />
+                <span>Send via WhatsApp</span>
+              </button>
+            </div>
           </form>
         </div>
 
@@ -223,12 +255,21 @@ export default function Contact() {
 
             {/* Phone */}
             <div className="info-item">
-              <div className="info-icon">
+              <div className="info-icon info-icon-whatsapp">
                 <Phone size={20} />
               </div>
-              <div>
+              <div style={{ flex: 1 }}>
                 <div className="info-title">Phone & WhatsApp</div>
                 <div className="info-val">{personal.phone}</div>
+                <a
+                  href="https://wa.me/9779803862836?text=Hi%20Dhrub,%20I%20saw%20your%20portfolio%20and%20wanted%20to%20connect!"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-whatsapp-direct"
+                >
+                  <MessageSquare size={14} />
+                  <span>Chat on WhatsApp Directly ↗</span>
+                </a>
               </div>
             </div>
 
