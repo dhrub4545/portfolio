@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, Sparkles, Bot, User, ArrowRight } from 'lucide-react';
+import { X, Send, Sparkles, Bot, User, ArrowRight, Zap, RefreshCw } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { getApiUrl } from '../utils/api';
+import MarkdownMessage from './MarkdownMessage';
 
 export default function AiAssistantModal({ isOpen, onClose, initialQuery }) {
   const { sampleAiQuestions } = portfolioData;
@@ -9,7 +10,9 @@ export default function AiAssistantModal({ isOpen, onClose, initialQuery }) {
   const [messages, setMessages] = useState([
     {
       role: 'ai',
-      text: "Hello! I am Dhrub Pandit's AI Assistant. Ask me anything about Dhrub's software systems, AUDEX AI, tech stack, or engineering experience!"
+      text: "Hello! I am **Dhrub Pandit's AI Assistant**.\n\nAsk me anything about Dhrub's production software systems, **AUDEX AI**, full-stack architecture, or verified certifications!",
+      model: 'adaptive',
+      source: 'init'
     }
   ]);
   const [inputText, setInputText] = useState('');
@@ -54,16 +57,19 @@ export default function AiAssistantModal({ isOpen, onClose, initialQuery }) {
         ...prev,
         {
           role: 'ai',
-          text: data.reply || "I'm ready to answer any questions about Dhrub's portfolio!"
+          text: data.reply || "I'm ready to answer any questions about Dhrub's portfolio!",
+          model: data.model,
+          source: data.source
         }
       ]);
     } catch (error) {
-      // Fallback
       setMessages((prev) => [
         ...prev,
         {
           role: 'ai',
-          text: `Dhrub is a Full Stack & AI Engineer specializing in React 19, Node.js, Express, MongoDB, and AI platforms like AUDEX AI. Feel free to contact him directly at panditdhrub0@gmail.com!`
+          text: `Dhrub is a **Full Stack & AI Engineer** specializing in **React 19, Node.js, Express, MongoDB**, and AI platforms like **AUDEX AI**. Feel free to contact him directly at [panditdhrub0@gmail.com](mailto:panditdhrub0@gmail.com)!`,
+          model: 'local-fallback',
+          source: 'local'
         }
       ]);
     } finally {
@@ -78,24 +84,35 @@ export default function AiAssistantModal({ isOpen, onClose, initialQuery }) {
     }
   };
 
+  const formatModelBadge = (model) => {
+    if (!model || model === 'init') return 'Adaptive AI';
+    if (model === 'local-fallback' || model === 'local') return 'Verified Engine';
+    return model
+      .replace('models/', '')
+      .replace('gemini-', '')
+      .replace('-latest', ' ⚡');
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-container chat-modal-container" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
-        <div className="modal-header">
+        <div className="modal-header chat-header">
           <div className="modal-title-group">
-            <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'color-mix(in srgb, var(--accent-primary) 20%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)' }}>
+            <div className="chat-avatar-glow">
               <Bot size={22} />
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-primary)' }}>
-                Dhrub AI Assistant
+              <div className="chat-header-title">
+                <span>Dhrub AI Assistant</span>
+                <span className="chat-badge-verified">Verified</span>
               </div>
-              <div style={{ fontSize: '0.78rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span className="status-dot" style={{ width: '6px', height: '6px' }} />
-                Online & Ready
+              <div className="chat-header-status">
+                <span className="status-dot-pulse" />
+                <span>Online & Ready</span>
+                <span className="chat-model-indicator">• Dynamic LLM</span>
               </div>
             </div>
           </div>
@@ -109,43 +126,62 @@ export default function AiAssistantModal({ isOpen, onClose, initialQuery }) {
         <div className="chat-messages-container">
           {messages.map((m, idx) => (
             <div key={idx} className={`chat-bubble ${m.role}`}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', fontSize: '0.75rem', opacity: 0.8 }}>
-                {m.role === 'ai' ? <Sparkles size={12} color="var(--accent-primary)" /> : <User size={12} />}
-                <span>{m.role === 'ai' ? 'Dhrub AI' : 'You'}</span>
+              <div className="chat-bubble-header">
+                <div className="chat-role-info">
+                  {m.role === 'ai' ? (
+                    <>
+                      <Sparkles size={12} className="chat-sparkle-icon" />
+                      <span className="chat-role-label">Dhrub AI</span>
+                      <span className="chat-model-badge">
+                        {formatModelBadge(m.model)}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <User size={12} />
+                      <span className="chat-role-label">You</span>
+                    </>
+                  )}
+                </div>
               </div>
-              <div style={{ whiteSpace: 'pre-line' }}>{m.text}</div>
+
+              {m.role === 'ai' ? (
+                <MarkdownMessage content={m.text} />
+              ) : (
+                <div className="chat-user-text">{m.text}</div>
+              )}
             </div>
           ))}
 
           {isTyping && (
-            <div className="chat-bubble ai" style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '12px 16px' }}>
-              <span className="status-dot" style={{ width: '6px', height: '6px' }} />
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Thinking...</span>
+            <div className="chat-bubble ai chat-typing-bubble">
+              <div className="chat-typing-indicator">
+                <span className="typing-dot" />
+                <span className="typing-dot" />
+                <span className="typing-dot" />
+              </div>
+              <span className="chat-typing-text">Synthesizing verified response...</span>
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
 
         {/* Quick prompt suggestions */}
-        <div style={{ padding: '8px 20px', background: 'var(--card-bg)', borderTop: '1px solid var(--glass-border)', display: 'flex', gap: '6px', overflowX: 'auto' }}>
-          {sampleAiQuestions.slice(0, 3).map((q, idx) => (
-            <button
-              key={idx}
-              onClick={() => sendMessage(q)}
-              style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid var(--glass-border)',
-                color: 'var(--text-muted)',
-                fontSize: '0.74rem',
-                padding: '4px 10px',
-                borderRadius: '9999px',
-                whiteSpace: 'nowrap',
-                cursor: 'pointer'
-              }}
-            >
-              {q}
-            </button>
-          ))}
+        <div className="chat-suggestions-bar">
+          <span className="chat-suggestions-label">Try asking:</span>
+          <div className="chat-suggestions-scroll">
+            {sampleAiQuestions.map((q, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => sendMessage(q)}
+                className="chat-suggestion-chip"
+              >
+                <span>{q}</span>
+                <ArrowRight size={11} className="chip-arrow" />
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Input Bar */}
@@ -155,13 +191,14 @@ export default function AiAssistantModal({ isOpen, onClose, initialQuery }) {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type your question about Dhrub..."
+            placeholder="Ask about AUDEX AI, tech stack, certifications..."
             className="chat-input-field"
           />
           <button
             onClick={() => sendMessage()}
             disabled={!inputText.trim()}
             className="chat-send-btn"
+            aria-label="Send message"
           >
             <Send size={16} />
           </button>
