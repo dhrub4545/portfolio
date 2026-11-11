@@ -8,17 +8,39 @@ export default function Certifications({ onOpenCertificate }) {
 
   const categories = [
     'All',
-    'Top Job Assets',
-    'Government & Licensure',
-    'Algorithms & Core CS',
+    '⭐ Top Job Assets',
+    'Hackathons & Competitions',
+    'Academic & Hackathons',
     'AI & Data Science',
-    'Industry Experience',
-    'Academic & Hackathons'
+    'Government & Licensure'
   ];
 
   const filteredCerts = certifications.filter((cert) => {
     if (filter === 'All') return true;
-    if (filter === 'Top Job Assets') return cert.isTopValued;
+    if (filter === '⭐ Top Job Assets' || filter === 'Top Job Assets') return cert.isTopValued;
+
+    // Direct match against categories array
+    if (cert.categories && cert.categories.includes(filter)) return true;
+
+    // Academic & Hackathons tab: shows both all hackathons and academic honors
+    if (filter === 'Academic & Hackathons') {
+      return (
+        cert.categories?.includes('Academic & Hackathons') ||
+        cert.categories?.includes('Hackathons & Competitions') ||
+        cert.categories?.includes('Academic & Honors') ||
+        cert.category === 'Hackathons & Competitions' ||
+        cert.category === 'Academic & Honors'
+      );
+    }
+
+    // Hackathons & Competitions tab
+    if (filter === 'Hackathons & Competitions') {
+      return (
+        cert.categories?.includes('Hackathons & Competitions') ||
+        cert.category === 'Hackathons & Competitions'
+      );
+    }
+
     return cert.category === filter;
   });
 
