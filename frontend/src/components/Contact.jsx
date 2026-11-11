@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Copy, Check, Headphones, MessageSquare, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Mail, Phone, MapPin, Send, Copy, Check, Clock, Zap, Globe, MessageSquare, AlertCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { getApiUrl } from '../utils/api';
 
@@ -16,6 +16,38 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // { success: boolean, message: string }
   const [copied, setCopied] = useState(false);
+
+  const [nepalTime, setNepalTime] = useState(() => {
+    try {
+      return new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Kathmandu',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      }).format(new Date());
+    } catch {
+      return 'UTC+5:45';
+    }
+  });
+
+  useEffect(() => {
+    const updateTime = () => {
+      try {
+        setNepalTime(
+          new Intl.DateTimeFormat('en-US', {
+            timeZone: 'Asia/Kathmandu',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+          }).format(new Date())
+        );
+      } catch {
+        // fallback
+      }
+    };
+    const timer = setInterval(updateTime, 10000);
+    return () => clearInterval(timer);
+  }, []);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personal.email);
@@ -214,24 +246,32 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Spotify / Developer Soundtrack Widget */}
-            <div className="spotify-card">
-              <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#1db954', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000000', flexShrink: 0 }}>
-                <Headphones size={22} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '0.74rem', color: '#1db954', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  Engineering Soundtrack
+            {/* Professional Availability & Work Readiness Card */}
+            <div className="availability-card">
+              <div className="avail-header">
+                <div className="avail-status-tag">
+                  <span className="avail-pulse-dot" />
+                  <span>AVAILABLE FOR IMMEDIATE JOINING</span>
                 </div>
-                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#ffffff' }}>
-                  Deep Focus & Synthwave Coding Mix
+                <div className="avail-time font-mono">
+                  <Clock size={14} />
+                  <span>Nepal: {nepalTime} (UTC+5:45)</span>
                 </div>
               </div>
-              <div className="spotify-equalizer">
-                <span className="equalizer-bar" />
-                <span className="equalizer-bar" />
-                <span className="equalizer-bar" />
-                <span className="equalizer-bar" />
+
+              <div className="avail-body">
+                <div className="avail-item">
+                  <Zap size={16} className="avail-icon-zap" />
+                  <span>
+                    <strong>Quick Response Guarantee:</strong> ⚡ Typically responds within 2–4 hours
+                  </span>
+                </div>
+                <div className="avail-item">
+                  <Globe size={16} className="avail-icon-globe" />
+                  <span>
+                    <strong>Work Readiness:</strong> Open to Remote Worldwide, On-Site & Hybrid positions
+                  </span>
+                </div>
               </div>
             </div>
           </div>
