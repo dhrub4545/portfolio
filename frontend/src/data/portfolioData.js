@@ -161,7 +161,7 @@ export const portfolioData = {
     },
     {
       id: "ypss",
-      name: "YPSS School ERP",
+      name: "YPSS — Yashoda Prem Shishu Sadan",
       title: "Enterprise School ERP & Bilingual AI Question Engine",
       category: "Full Stack",
       featured: true,

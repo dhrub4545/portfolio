@@ -100,7 +100,7 @@ flowchart TD
   * Dark (`#0d0d12`) / Light (`#f8fafc`) theme switcher using SVG clip-path wave animations and persistent state.
 * **Filterable Featured Projects Grid**:
   * Dynamic filtering across Full Stack & AI, Web Platforms, and Machine Learning.
-  * Showcases flagship projects including **AUDEX AI** (Enterprise LLM Spend Auditing), **MovieTV** (cinematic streaming with AES-128 HLS decryption), **fshare** (WebRTC P2P DataChannels), and **LLM Quiz Generator**.
+  * Showcases flagship projects including **AUDEX AI** (Enterprise LLM Spend Auditing), **MovieTV** (cinematic streaming with AES-128 HLS decryption), **fshare** (WebRTC P2P DataChannels), **LLM Quiz Generator**, and **YPSS — Yashoda Prem Shishu Sadan** (School ERP & Gemini AI System).
 * **Verified Academic & Professional Credentials**:
   * Interactive high-resolution credential viewer for the official **RRIT / VTU Degree Transcript (8.94 CGPA)** and **Karunadu Technologies Machine Learning Internship Certificate**.
 
