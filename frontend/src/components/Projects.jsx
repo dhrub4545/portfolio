@@ -57,10 +57,25 @@ export default function Projects() {
                 <div className="project-card-header">
                   <span className="project-badge">{project.badge}</span>
                   {project.liveUrl && (
-                    <span style={{ fontSize: '0.78rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 700 }}>
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontSize: '0.78rem',
+                        color: '#10b981',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                        fontWeight: 700,
+                        textDecoration: 'none',
+                        cursor: 'pointer'
+                      }}
+                      title={`Visit ${project.name} live`}
+                    >
                       <span className="status-dot" style={{ width: '6px', height: '6px' }} />
-                      Live Demo
-                    </span>
+                      Live Demo ↗
+                    </a>
                   )}
                 </div>
 
