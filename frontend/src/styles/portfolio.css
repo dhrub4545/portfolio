@@ -1506,38 +1506,7 @@ body {
   color: #0d0d12;
 }
 
-/* WhatsApp Actions in Contact Form & Channels */
-.contact-form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-
-.btn-whatsapp-action {
-  background: #25D366;
-  color: #ffffff;
-  border: none;
-  font-weight: 700;
-  font-size: 0.88rem;
-  border-radius: 12px;
-  padding: 12px 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background-color 0.2s ease;
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
-  font-family: inherit;
-  justify-content: center;
-}
-
-.btn-whatsapp-action:hover {
-  transform: translateY(-2px);
-  background: #22c35e;
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-}
-
+/* WhatsApp Direct Link & Alert in Contact Channels */
 .btn-whatsapp-direct {
   margin-top: 6px;
   background: rgba(37, 211, 102, 0.12);
@@ -1587,28 +1556,6 @@ body {
   background: rgba(239, 68, 68, 0.12);
   border: 1px solid #ef4444;
   color: #ef4444;
-}
-
-.btn-whatsapp-followup {
-  align-self: flex-start;
-  background: #25D366;
-  color: #ffffff;
-  border: none;
-  font-size: 0.82rem;
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: transform 0.2s ease, background 0.2s ease;
-  font-family: inherit;
-}
-
-.btn-whatsapp-followup:hover {
-  background: #20ba5a;
-  transform: translateY(-1px);
 }
 
 [data-theme='light'] .btn-whatsapp-direct {

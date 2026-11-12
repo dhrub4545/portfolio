@@ -55,25 +55,6 @@ export default function Contact() {
     setTimeout(() => setCopied(false), 2200);
   };
 
-  const handleSendViaWhatsApp = () => {
-    const name = formData.name.trim() || 'Visitor';
-    const email = formData.email.trim() || 'Not specified';
-    const subject = formData.subject.trim() || 'Portfolio Opportunity';
-    const message = formData.message.trim() || 'Hi Dhrub, I came across your portfolio and wanted to discuss a project!';
-
-    const text = `Hi Dhrub!
-👤 *From:* ${name}
-📧 *Email:* ${email}
-📌 *Subject:* ${subject}
-
-💬 *Message:*
-${message}`;
-
-    const cleanPhone = '9779803862836';
-    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-  };
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -143,16 +124,6 @@ ${message}`;
                 {submitStatus.success ? <Check size={18} /> : <AlertCircle size={18} />}
                 <span>{submitStatus.message}</span>
               </div>
-              {submitStatus.success && (
-                <button
-                  type="button"
-                  onClick={handleSendViaWhatsApp}
-                  className="btn-whatsapp-followup"
-                >
-                  <MessageSquare size={14} />
-                  <span>Also ping Dhrub on WhatsApp for instant reply ↗</span>
-                </button>
-              )}
             </div>
           )}
 
@@ -207,27 +178,15 @@ ${message}`;
               />
             </div>
 
-            <div className="contact-form-actions">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn-primary"
-                style={{ flex: 1, justifyContent: 'center' }}
-              >
-                <Send size={16} />
-                <span>{isSubmitting ? 'Transmitting...' : 'Send Message'}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleSendViaWhatsApp}
-                className="btn-whatsapp-action"
-                title="Send your message directly to Dhrub on WhatsApp"
-              >
-                <MessageSquare size={16} />
-                <span>Send via WhatsApp</span>
-              </button>
-            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-primary"
+              style={{ width: '100%', justifyContent: 'center' }}
+            >
+              <Send size={16} />
+              <span>{isSubmitting ? 'Transmitting...' : 'Send Message'}</span>
+            </button>
           </form>
         </div>
 
